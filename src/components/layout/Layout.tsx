@@ -1,25 +1,22 @@
-
-
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import HeaderPopover from "./components/HeaderPopover";
 import RecentTests from "./components/RecentTests";
 
 import UserPanel from "./components/UserPanel";
-
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 export default function Layout() {
+  const { isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
+
+  if (!isAuthenticated) {
+    console.log(isAuthenticated)
+    navigate("/login");
+  }
+
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
       <div className="min-h-full">
         <HeaderPopover />
         <main className="-mt-24 pb-8">
@@ -31,10 +28,9 @@ export default function Layout() {
               <div className="grid grid-cols-1 gap-4 lg:col-span-2">
                 {/* Welcome panel */}
                 <UserPanel />
-                
+
                 {/* Main Content */}
                 <Outlet />
-                
               </div>
 
               {/* Right column */}

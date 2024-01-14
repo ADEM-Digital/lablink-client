@@ -3,25 +3,21 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
 import { classNames } from "../../../utils/stringUtils";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "History", href: "#", current: false },
 ];
 
-const userNavigation = [
-  { name: "Sign out", href: "#" },
+const userNavigation: {name: string; href: string}[] = [
+    // { name: "Sign out", href: "#" }
 ];
 
-const user = {
-    name: "Chelsea Hagon",
-    email: "chelsea.hagon@example.com",
-    role: "Human Resources Manager",
-    imageUrl:
-      "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  };
+
 
 const HeaderPopover = () => {
+  const { user, logout } = useAuth0();
   return (
     <Popover
       as="header"
@@ -62,7 +58,7 @@ const HeaderPopover = () => {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={user.imageUrl}
+                        src={user?.picture}
                         alt=""
                       />
                     </Menu.Button>
@@ -89,6 +85,16 @@ const HeaderPopover = () => {
                           )}
                         </Menu.Item>
                       ))}
+                      <Menu.Item>
+                        <button
+                          onClick={() => logout()}
+                          className={classNames(
+                            "block px-4 py-2 text-sm text-gray-700"
+                          )}
+                        >
+                            Sign out
+                        </button>
+                      </Menu.Item>
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -218,16 +224,16 @@ const HeaderPopover = () => {
                         <div className="flex-shrink-0">
                           <img
                             className="h-10 w-10 rounded-full"
-                            src={user.imageUrl}
+                            src={user?.picture}
                             alt=""
                           />
                         </div>
                         <div className="ml-3 min-w-0 flex-1">
                           <div className="truncate text-base font-medium text-gray-800">
-                            {user.name}
+                            {user?.name}
                           </div>
                           <div className="truncate text-sm font-medium text-gray-500">
-                            {user.email}
+                            {user?.email}
                           </div>
                         </div>
                         <button
@@ -249,6 +255,14 @@ const HeaderPopover = () => {
                             {item.name}
                           </a>
                         ))}
+                        <button
+                          onClick={() => logout()}
+                          className={classNames(
+                            "block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                          )}
+                        >
+                            Sign out
+                        </button>
                       </div>
                     </div>
                   </div>

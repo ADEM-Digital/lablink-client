@@ -1,10 +1,6 @@
-const user = {
-  name: "Chelsea Hagon",
-  email: "chelsea.hagon@example.com",
-  role: "Human Resources Manager",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+import { useAuth0 } from "@auth0/auth0-react";
+
+
 
 const stats = [
   { label: "Available results", value: 12 },
@@ -13,6 +9,7 @@ const stats = [
 ];
 
 const UserPanel = () => {
+    const {user} = useAuth0();
   return (
     <section aria-labelledby="profile-overview-title">
       <div className="overflow-hidden rounded-lg bg-white shadow">
@@ -25,7 +22,7 @@ const UserPanel = () => {
               <div className="flex-shrink-0">
                 <img
                   className="mx-auto h-20 w-20 rounded-full"
-                  src={user.imageUrl}
+                  src={user?.picture}
                   alt=""
                 />
               </div>
@@ -34,7 +31,7 @@ const UserPanel = () => {
                   Welcome back,
                 </p>
                 <p className="text-xl font-bold text-gray-900 sm:text-2xl">
-                  {user.name}
+                  {user?.name}
                 </p>
                 {/* <p className="text-sm font-medium text-gray-600">{user.role}</p> */}
               </div>
