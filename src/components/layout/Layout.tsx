@@ -5,15 +5,44 @@ import RecentTests from "./components/RecentTests";
 import UserPanel from "./components/UserPanel";
 import { useAuth0 } from "@auth0/auth0-react";
 
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function Layout() {
-  const { isAuthenticated } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
 
   if (!isAuthenticated) {
-    console.log(isAuthenticated)
+    console.log(isAuthenticated);
     navigate("/login");
   }
+
+  useEffect(() => {
+    if (user?.sub) {
+        console.log(user.sub)
+      const checkUserData = async () => {
+        try {
+          if (user?.sub) {
+            const profileDocuments = await axios.get(
+              `${import.meta.env.VITE_API_URL}/v1/userProfiles`,
+              {
+                params: {
+                  userId: user.sub,
+                },
+              }
+            );
+
+            if (profileDocuments.data.length < 1) {
+              navigate("/register");
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      checkUserData();
+    }
+  }, [user, navigate]);
 
   return (
     <>
