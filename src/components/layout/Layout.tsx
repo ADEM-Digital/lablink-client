@@ -1,8 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import HeaderPopover from "./components/HeaderPopover";
-import RecentTests from "./components/RecentTests";
 
-import UserPanel from "./components/UserPanel";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import axios from "axios";
@@ -49,26 +47,7 @@ export default function Layout() {
       <div className="min-h-full">
         <HeaderPopover />
         <main className="-mt-24 pb-8">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <h1 className="sr-only">Profile</h1>
-            {/* Main 3 column grid */}
-            <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
-              {/* Left column */}
-              <div className="grid grid-cols-1 gap-4 lg:col-span-2">
-                {/* Welcome panel */}
-                <UserPanel />
-
-                {/* Main Content */}
-                <Outlet />
-              </div>
-
-              {/* Right column */}
-              <div className="grid grid-cols-1 gap-4">
-                {/* Recent Tests */}
-                <RecentTests />
-              </div>
-            </div>
-          </div>
+          <Outlet />
         </main>
         {/* <footer>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">

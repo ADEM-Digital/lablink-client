@@ -1,18 +1,33 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { UseQueryResult } from "react-query";
+import { DashboardDataType } from "../hooks";
+import { useEffect, useState } from "react";
+
+type UserPanelPropsType = {
+  dashboardQuery: UseQueryResult<DashboardDataType | undefined, unknown>
+}
 
 
 
-const stats = [
-  { label: "Available results", value: 12 },
-  { label: "Pending results", value: 4 },
-  { label: "Recent results", value: 2 },
-];
-
-const UserPanel = () => {
+const UserPanel = ({dashboardQuery}: UserPanelPropsType) => {
     const {user} = useAuth0();
+    const [stats, setStats] = useState([
+      { label: "Available results", value: 0 },
+      { label: "Pending results", value: 0 },
+      { label: "Recent results", value: 0 },
+    ]);
+
+    useEffect(() => {
+      const updatedStats = [... stats];
+      updatedStats[0].value = dashboardQuery?.data?.availableResults ? dashboardQuery.data.availableResults : 0;
+      updatedStats[1].value = dashboardQuery?.data?.pendingResults ? dashboardQuery.data.pendingResults : 0;
+      updatedStats[2].value = dashboardQuery?.data?.recentResults ? dashboardQuery.data.recentResults : 0;
+
+      setStats(updatedStats);
+    }, [dashboardQuery?.data])
   return (
-    <section aria-labelledby="profile-overview-title">
-      <div className="overflow-hidden rounded-lg bg-white shadow">
+    <section aria-labelledby="profile-overview-title ">
+      <div className="overflow-hidden rounded-lg bg-white shadow sm:max-w-[80%] sm:mx-auto">
         <h2 className="sr-only" id="profile-overview-title">
           Profile Overview
         </h2>

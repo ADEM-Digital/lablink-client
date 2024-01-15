@@ -1,13 +1,14 @@
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+
 import { Fragment } from "react";
 import { classNames } from "../../../utils/stringUtils";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "History", href: "#", current: false },
+  { name: "Home", path: "/", current: true },
+  { name: "History", path: "/history", current: false },
 ];
 
 const userNavigation: {name: string; href: string}[] = [
@@ -18,6 +19,7 @@ const userNavigation: {name: string; href: string}[] = [
 
 const HeaderPopover = () => {
   const { user, logout } = useAuth0();
+  const navigate = useNavigate();
   return (
     <Popover
       as="header"
@@ -73,15 +75,15 @@ const HeaderPopover = () => {
                       {userNavigation.map((item) => (
                         <Menu.Item key={item.name}>
                           {({ active }) => (
-                            <a
-                              href={item.href}
+                            <button
+                              onClick={() => navigate(item.href)}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               {item.name}
-                            </a>
+                            </button>
                           )}
                         </Menu.Item>
                       ))}
@@ -106,9 +108,9 @@ const HeaderPopover = () => {
                   <div className="hidden lg:col-span-2 lg:block">
                     <nav className="flex space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        <button
                           key={item.name}
-                          href={item.href}
+                          onClick={() => navigate(item.path)}
                           className={classNames(
                             item.current ? "text-white" : "text-cyan-100",
                             "rounded-md bg-white bg-opacity-0 px-3 py-2 text-sm font-medium hover:bg-opacity-10"
@@ -116,12 +118,12 @@ const HeaderPopover = () => {
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
+                        </button>
                       ))}
                     </nav>
                   </div>
-                  <div className="px-12 lg:px-0">
-                    {/* Search */}
+                  {/* <div className="px-12 lg:px-0">
+                    Search 
                     <div className="mx-auto w-full max-w-xs lg:max-w-md">
                       <label htmlFor="search" className="sr-only">
                         Search
@@ -142,7 +144,7 @@ const HeaderPopover = () => {
                         />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -209,13 +211,13 @@ const HeaderPopover = () => {
                       </div>
                       <div className="mt-3 space-y-1 px-2">
                         {navigation.map((item) => (
-                          <a
+                          <button
                             key={item.name}
-                            href={item.href}
+                            onClick={() => navigate(item.path)}
                             className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
                           >
                             {item.name}
-                          </a>
+                          </button>
                         ))}
                       </div>
                     </div>
