@@ -4,7 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { classNames } from "../../../utils/stringUtils";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Home", path: "/", current: true },
@@ -20,6 +20,7 @@ const userNavigation: {name: string; href: string}[] = [
 const HeaderPopover = () => {
   const { user, logout } = useAuth0();
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <Popover
       as="header"
@@ -30,15 +31,17 @@ const HeaderPopover = () => {
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="relative flex flex-wrap items-center justify-center lg:justify-between">
               {/* Logo */}
-              <div className="absolute left-0 flex-shrink-0 py-5 lg:static">
-                <a href="#">
+              <div className="flex items-center gap-2 absolute left-0 flex-shrink-0 py-5 lg:static">
+                <button onClick={() => navigate("/")} className="bg-white rounded-full p-0.5">
                   <span className="sr-only">Lablink</span>
                   <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=200"
+                    className="h-10 w-auto"
+                    src="/Lablink-logo.png"
                     alt=""
                   />
-                </a>
+                  
+                </button>
+                <p className=" text-white font-semibold text-2xl">LabLink</p>
               </div>
 
               {/* Right section on desktop */}
@@ -112,10 +115,10 @@ const HeaderPopover = () => {
                           key={item.name}
                           onClick={() => navigate(item.path)}
                           className={classNames(
-                            item.current ? "text-white" : "text-cyan-100",
+                            location.pathname === item.path ? "text-white" : "text-cyan-100",
                             "rounded-md bg-white bg-opacity-0 px-3 py-2 text-sm font-medium hover:bg-opacity-10"
                           )}
-                          aria-current={item.current ? "page" : undefined}
+                          aria-current={location.pathname === item.path ? "page" : undefined}
                         >
                           {item.name}
                         </button>

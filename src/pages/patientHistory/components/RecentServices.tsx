@@ -1,28 +1,51 @@
 import { BeakerIcon } from "@heroicons/react/24/outline";
 import { UseQueryResult } from "react-query";
-import { DashboardDataType } from "../hooks";
+
 import { useEffect, useState } from "react";
 import { ServiceType } from "../../../types/Service";
-import RecentTestEmptyState from "./RecentTestsEmptyState";
+import RecentTestEmptyState from "../../pateintDashboard/components/RecentTestsEmptyState";
 import { classNames } from "../../../utils/stringUtils";
+import { stringToDate } from "../../../utils/dateUtils";
+import { useNavigate } from "react-router-dom";
 
-type RecentTestsPropsType = {
-  dashboardQuery: UseQueryResult<DashboardDataType | undefined, unknown>;
+type RecentServicesPropsType = {
+  patientServicesQuery: UseQueryResult<ServiceType[] | undefined, unknown>;
+  setSelectedService: React.Dispatch<
+    React.SetStateAction<ServiceType | undefined>
+  >;
 };
 
-const RecentTests = ({ dashboardQuery }: RecentTestsPropsType) => {
+const RecentServices = ({
+  patientServicesQuery,
+  setSelectedService,
+}: RecentServicesPropsType) => {
   const [recentServices, setRecentServices] = useState<ServiceType[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setRecentServices(
-      dashboardQuery.data?.recentResultsDetails
-        ? dashboardQuery.data?.recentResultsDetails
-        : []
-    );
-  }, [dashboardQuery.data]);
+    if (patientServicesQuery.data) {
+      setRecentServices(
+        patientServicesQuery.data
+          .filter((service) => service.status !== "pending results")
+          .sort((a, b) => {
+            const dateA = new Date(a.updatedAt);
+            const dateB = new Date(b.updatedAt);
+            // @ts-ignore
+            return dateA - dateB;
+          })
+          .slice(0, 5)
+      );
+    }
+  }, [patientServicesQuery.data]);
+
   return (
     <section aria-labelledby="recent-hires-title">
-      <div className={classNames(recentServices.length < 1 ? "flex items-center justify-center" : "" ,"overflow-hidden rounded-lg bg-white shadow sm:max-w-[80%] sm:mx-auto")}>
+      <div
+        className={classNames(
+          recentServices.length < 1 ? "flex items-center" : "",
+          "overflow-hidden rounded-lg bg-white shadow min-h-[30vh]"
+        )}
+      >
         {recentServices.length > 0 && (
           <div className="p-6">
             <h2
@@ -51,11 +74,17 @@ const RecentTests = ({ dashboardQuery }: RecentTestsPropsType) => {
                           {service._id.toString()}
                         </p>
                         <p className="truncate text-sm text-gray-500">
-                          {`Created At: ${service.createdAt} | Updated at: ${service.updatedAt}`}
+                          {`Created At: ${stringToDate(service.createdAt)}`}
+                        </p>
+                        <p className="truncate text-sm text-gray-500">
+                          {`Updated at: ${stringToDate(service.updatedAt)}`}
                         </p>
                       </div>
                       <div>
-                        <button className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <button
+                          onClick={() => setSelectedService(service)}
+                          className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        >
                           View
                         </button>
                       </div>
@@ -65,18 +94,21 @@ const RecentTests = ({ dashboardQuery }: RecentTestsPropsType) => {
               </ul>
             </div>
             <div className="mt-6">
-              <a
-                href="#"
+              <button
+                onClick={() => {
+                  setSelectedService(undefined);
+                  navigate("/history");
+                }}
                 className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               >
                 View all
-              </a>
+              </button>
             </div>
           </div>
         )}
 
         {recentServices.length < 1 && (
-          <div className="p-6">
+          <div className="p-6 flex items-center justify-center w-full">
             <RecentTestEmptyState />
           </div>
         )}
@@ -85,4 +117,4 @@ const RecentTests = ({ dashboardQuery }: RecentTestsPropsType) => {
   );
 };
 
-export default RecentTests;
+export default RecentServices;

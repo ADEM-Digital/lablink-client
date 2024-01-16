@@ -7,6 +7,6 @@ export type ServiceType = {
   status: "pending results" | "results uploaded" | "opened";
   tests: TestType[];
   results?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
