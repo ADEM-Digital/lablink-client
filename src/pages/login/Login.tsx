@@ -1,13 +1,22 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import DotLoaderSpinner from "../../components/spinners/DotLoader";
 
 const Login = () => {
+  
+  const {user, isAuthenticated} = useAuth0();
+  const navigate = useNavigate()
   const { loginWithRedirect } = useAuth0();
   useEffect(() => {
-    console.log(window.location.origin)
-  }, [])
+    console.log("login", isAuthenticated)
+    if (user) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+  
   return (
-    <>
+    <Suspense fallback={<DotLoaderSpinner />}>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -39,7 +48,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-    </>
+    </Suspense>
   );
 };
 
