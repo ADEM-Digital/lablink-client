@@ -50,10 +50,6 @@ export const useUserProfileContext = () => {
     checkUserData();
   }, [user, isAuthenticated]);
 
-  useEffect(() => {
-    console.log(userProfile);
-  }, [userProfile]);
-
   return {
     UserProfileContext,
     userProfile,
