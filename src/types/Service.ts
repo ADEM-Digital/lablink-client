@@ -2,10 +2,10 @@ import { ObjectId } from "mongodb"
 import { TestType } from "./Test";
 
 export type ServiceType = {
-  _id: ObjectId;
-  user: ObjectId;
+  _id?: ObjectId | string;
+  user: ObjectId | string;
   status: "pending results" | "results uploaded" | "opened";
-  tests: TestType[];
+  tests: (TestType | string)[];
   results?: string;
   createdAt: string;
   updatedAt: string;
