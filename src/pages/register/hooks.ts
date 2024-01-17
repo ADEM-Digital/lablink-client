@@ -54,7 +54,6 @@ export const useRegistration = () => {
 
   useEffect(() => {
     if (user?.sub) {
-      console.log(user.sub);
       const checkUserData = async () => {
         try {
           if (user?.sub) {
