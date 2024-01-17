@@ -7,16 +7,22 @@ import {
   ServicesSlideOverContext,
   ServicesSlideOverContextType,
 } from "../../../context/ServiceSlideOver";
+
 import { Form, Formik } from "formik";
 import { useSlideOverForm } from "./hooks";
 import { classNames } from "../../../utils/stringUtils";
 import DotLoaderSpinner from "../../spinners/DotLoader";
 import { useQueryClient } from "react-query";
 
+
+
+
+
 export default function ServicesSlideOverForm() {
-  const { ServiceDataQuery, initialValues, ServiceMutation } =
+  
+  const { ServiceDataQuery, initialValues, saveService } =
     useSlideOverForm();
-  const { mutate, isLoading } = ServiceMutation;
+
   const { isServicesSlideOverOpen, setIsServicesSlideOverOpen } = useContext(
     ServicesSlideOverContext as Context<ServicesSlideOverContextType>
   );
@@ -29,7 +35,6 @@ export default function ServicesSlideOverForm() {
         as="div"
         className="relative z-10"
         onClose={setIsServicesSlideOverOpen}
-
       >
         <div className="fixed inset-0" />
 
@@ -48,25 +53,29 @@ export default function ServicesSlideOverForm() {
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-2xl">
                   <Formik
                     initialValues={initialValues}
-                    onSubmit={(values, actions) => {
-                      console.log(values);
-                      mutate({
-                        user: values.selectedPatient?.value,
+                    onSubmit={async (values, actions) => {
+                      
+                      const createdService = await saveService({
+                        user: values.selectedPatient?.value as string,
                         status: "pending results",
                         tests: values.selectedTests.map((test) => test.value),
-                        createdAt: new Date(),
-                        updatedAt: new Date(),
+                        createdAt: new Date().toString(),
+                        updatedAt: new Date().toString(),
                       });
+
                       actions.setSubmitting(false);
-                      queryClient.refetchQueries({queryKey: ["staffDashboardData"]})
-                      setIsServicesSlideOverOpen(false)
+                      console.log(createdService);
+                      queryClient.refetchQueries({
+                        queryKey: ["staffDashboardData"],
+                      });
+                      setIsServicesSlideOverOpen(false);
                     }}
                   >
                     {(props) => (
                       <>
                         <Form
                           className={classNames(
-                            isLoading ? "hidden" : "",
+                            props.isSubmitting ? "" : "",
                             "flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
                           )}
                         >
@@ -194,7 +203,12 @@ export default function ServicesSlideOverForm() {
                             </div>
                           </div>
                         </Form>
-                        {isLoading && <DotLoaderSpinner />}
+                        {props.isSubmitting && (
+                        <div className="absolute top-0 left-16 z-20 flex flex-col items-center justify-center h-full w-full bg-cyan-600/20 gap-10">
+                          <DotLoaderSpinner />
+                          <p className="text-gray-600">Please wait while we process the request...</p>
+                        </div>
+                        )}
                       </>
                     )}
                   </Formik>
