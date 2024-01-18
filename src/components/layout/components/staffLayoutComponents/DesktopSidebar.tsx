@@ -47,10 +47,10 @@ const DesktopSidebar = ({navigation, secondaryNavigation} : DesktopSidebarPropsT
                     key={item.name}
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-cyan-800 text-white' : 'text-cyan-100 hover:bg-cyan-600 hover:text-white',
+                      item.href === window.location.pathname ? 'bg-cyan-800 text-white' : 'text-cyan-100 hover:bg-cyan-600 hover:text-white',
                       'group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6'
                     )}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={item.href === window.location.pathname? 'page' : undefined}
                   >
                     <item.icon className="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200" aria-hidden="true" />
                     {item.name}

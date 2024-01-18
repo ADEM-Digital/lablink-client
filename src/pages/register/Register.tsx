@@ -34,7 +34,7 @@ export default function Register() {
                         <span className="sr-only">Lablink</span>
                         <img
                           className="h-8 w-auto"
-                          src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=200"
+                          src="/Lablink-logo.png"
                           alt=""
                         />
                       </a>
@@ -158,8 +158,8 @@ export default function Register() {
                               <div>
                                 <img
                                   className="h-8 w-auto"
-                                  src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=600"
-                                  alt="Your Company"
+                                  src="/Lablink-log.png"
+                                  alt="Lablink"
                                 />
                               </div>
                               <div className="-mr-2">

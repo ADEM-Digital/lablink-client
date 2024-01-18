@@ -1,9 +1,10 @@
 import { ObjectId } from "mongodb"
 import { TestType } from "./Test";
+import { UserProfile } from "auth0";
 
 export type ServiceType = {
   _id?: ObjectId | string;
-  user: ObjectId | string;
+  user: UserProfile | ObjectId | string ;
   status: "pending results" | "results uploaded" | "opened";
   tests: (TestType | string)[];
   results?: string;

@@ -17,8 +17,8 @@ import Navbar from "./components/staffLayoutComponents/Navbar";
 import { Outlet } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "#", icon: HomeIcon, current: true },
-  { name: "Services", href: "#", icon: ClockIcon, current: false },
+  { name: "Home", href: "/", icon: HomeIcon, current: true },
+  { name: "Services", href: "/services", icon: ClockIcon, current: false },
   { name: "Staff", href: "#", icon: UserGroupIcon, current: false },
   { name: "Patients", href: "#", icon: UserGroupIcon, current: false },
 
