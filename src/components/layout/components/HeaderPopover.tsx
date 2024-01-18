@@ -103,7 +103,7 @@ const HeaderPopover = () => {
                           ))}
                           <Menu.Item>
                             <button
-                              onClick={() => logout()}
+                              onClick={() => logout({logoutParams: {returnTo: window.location.origin}})}
                               className={classNames(
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
@@ -296,7 +296,7 @@ const HeaderPopover = () => {
                               </a>
                             ))}
                             <button
-                              onClick={() => logout()}
+                              onClick={() => logout({logoutParams: {returnTo: window.location.origin}})}
                               className={classNames(
                                 "block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
                               )}
