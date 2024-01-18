@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { classNames } from "../../../../utils/stringUtils";
+import { useNavigate } from "react-router-dom";
 
 type MobileMenuPropsType = {
   navigation: {
@@ -35,6 +36,7 @@ const MobileMenu = ({
   sidebarOpen,
   setSidebarOpen,
 }: MobileMenuPropsType) => {
+  const navigate = useNavigate()
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -106,9 +108,9 @@ const MobileMenu = ({
               >
                 <div className="space-y-1 px-2">
                   {navigation.map((item) => (
-                    <a
+                    <button
                       key={item.name}
-                      href={item.href}
+                      onClick={() => navigate(item.href)}
                       className={classNames(
                         item.href === window.location.pathname
                           ? "bg-cyan-800 text-white"
@@ -126,15 +128,15 @@ const MobileMenu = ({
                         aria-hidden="true"
                       />
                       {item.name}
-                    </a>
+                    </button>
                   ))}
                 </div>
                 <div className="mt-6 pt-6">
                   <div className="space-y-1 px-2">
                     {secondaryNavigation.map((item) => (
-                      <a
+                      <button
                         key={item.name}
-                        href={item.href}
+                        onClick={() => navigate(item.href)}
                         className="group flex items-center rounded-md px-2 py-2 text-base font-medium text-cyan-100 hover:bg-cyan-600 hover:text-white"
                       >
                         <item.icon
@@ -142,7 +144,7 @@ const MobileMenu = ({
                           aria-hidden="true"
                         />
                         {item.name}
-                      </a>
+                      </button>
                     ))}
                   </div>
                 </div>

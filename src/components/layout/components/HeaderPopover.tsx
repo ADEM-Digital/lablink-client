@@ -287,13 +287,13 @@ const HeaderPopover = () => {
                           </div>
                           <div className="mt-3 space-y-1 px-2">
                             {userNavigation.map((item) => (
-                              <a
+                              <button
                                 key={item.name}
-                                href={item.href}
+                                onClick={() => navigate(item.href)}
                                 className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
                               >
                                 {item.name}
-                              </a>
+                              </button>
                             ))}
                             <button
                               onClick={() => logout({logoutParams: {returnTo: window.location.origin}})}

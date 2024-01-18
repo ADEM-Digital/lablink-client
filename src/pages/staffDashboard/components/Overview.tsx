@@ -2,6 +2,7 @@ import { CheckCircleIcon, ExclamationCircleIcon, PhoneIcon } from "@heroicons/re
 import { UseQueryResult } from "react-query";
 import { StaffDashboardDataType } from "../hooks";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 type OverviewPropsType = {
@@ -11,6 +12,7 @@ type OverviewPropsType = {
 
 
 const Overview = ({staffDashboardQuery} : OverviewPropsType) => {
+  const navigate = useNavigate();
   const [cards, setCards] = useState([
     { name: "Completed services", href: "/services", icon: CheckCircleIcon, amount: 0 },
     { name: "Pending services", href: "/services", icon: ExclamationCircleIcon, amount: 0 },
@@ -61,12 +63,12 @@ const Overview = ({staffDashboardQuery} : OverviewPropsType) => {
             </div>
             <div className="bg-gray-50 px-5 py-3">
               <div className="text-sm">
-                <a
-                  href={card.href}
+                <button
+                  onClick={() => navigate(card.href)}
                   className="font-medium text-cyan-700 hover:text-cyan-900"
                 >
                   View all
-                </a>
+                </button>
               </div>
             </div>
           </div>

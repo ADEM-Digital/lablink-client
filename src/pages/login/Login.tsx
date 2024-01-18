@@ -42,12 +42,12 @@ const Login = () => {
           </button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}
-            <a
-              href="#"
+            <button
+              onClick={() => loginWithRedirect()}
               className="font-semibold leading-6 text-cyan-600 hover:text-cyan-500"
             >
               Register for free
-            </a>
+            </button>
           </p>
         </div>
       </div>

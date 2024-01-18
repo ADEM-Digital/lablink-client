@@ -7,6 +7,7 @@ import { classNames } from "../../utils/stringUtils";
 import { useRegistration } from "./hooks";
 
 import { Form, Formik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 const userNavigation: { name: string; href: string }[] = [
   // { name: "Sign out", href: "#" }
@@ -15,6 +16,7 @@ const userNavigation: { name: string; href: string }[] = [
 export default function Register() {
   const { user, logout } = useAuth0();
   const { initialValues, handleSubmit, checkingUserProfile } = useRegistration();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -30,14 +32,14 @@ export default function Register() {
                   <div className="relative flex flex-wrap items-center justify-center lg:justify-between">
                     {/* Logo */}
                     <div className="absolute left-0 flex-shrink-0 py-5 lg:static">
-                      <a href="#">
+                      <button>
                         <span className="sr-only">Lablink</span>
                         <img
                           className="h-8 w-auto"
                           src="/Lablink-logo.png"
                           alt=""
                         />
-                      </a>
+                      </button>
                     </div>
 
                     {/* Right section on desktop */}
@@ -74,15 +76,15 @@ export default function Register() {
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
-                                  <a
-                                    href={item.href}
+                                  <button
+                                    onClick={() => navigate(item.href)}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
                                       "block px-4 py-2 text-sm text-gray-700"
                                     )}
                                   >
                                     {item.name}
-                                  </a>
+                                  </button>
                                 )}
                               </Menu.Item>
                             ))}
