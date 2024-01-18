@@ -6,6 +6,7 @@ import { ServiceType } from "../../../types/Service";
 import RecentTestEmptyState from "./RecentTestsEmptyState";
 import { classNames } from "../../../utils/stringUtils";
 import { useNavigate } from "react-router-dom";
+import { stringToDate } from "../../../utils/dateUtils";
 
 type RecentTestsPropsType = {
   dashboardQuery: UseQueryResult<DashboardDataType | undefined, unknown>;
@@ -53,7 +54,7 @@ const RecentTests = ({ dashboardQuery }: RecentTestsPropsType) => {
                           {service._id?.toString()}
                         </p>
                         <p className="truncate text-sm text-gray-500">
-                          {`Created At: ${service.createdAt} | Updated at: ${service.updatedAt}`}
+                          {`Created At: ${stringToDate(service.createdAt)} | Updated at: ${stringToDate(service.updatedAt)}`}
                         </p>
                       </div>
                       <div>

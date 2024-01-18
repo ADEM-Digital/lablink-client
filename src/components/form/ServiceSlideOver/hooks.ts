@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { UserProfileType } from "../../../types/UserProfile";
 import { TestType } from "../../../types/Test";
 import { ServiceType } from "../../../types/Service";
@@ -15,12 +15,15 @@ type formData = {
 };
 
 export const useSlideOverForm = () => {
+  const queryClient = useQueryClient()
   const saveService = async (newService: ServiceType) => {
     try {
       const response: AxiosResponse<ServiceType> = await axios.post(
         `${import.meta.env.VITE_API_URL}/v1/services`,
         newService
       );
+
+      queryClient.refetchQueries("staffServices");
       return response.data;
     } catch (error) {
       console.log(error);
