@@ -4,7 +4,7 @@ import { usePatientDashboard } from "./hooks";
 
 const PatientDashboard = () => {
   const { dashboardQuery } = usePatientDashboard();
-  console.log(dashboardQuery);
+  
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 mt-8 lg:mt-0">
       <h1 className="sr-only">Profile</h1>

@@ -2,13 +2,43 @@ import { ServiceType } from "../../../types/Service";
 import { classNames, sentenceToCaps } from "../../../utils/stringUtils";
 import { stringToDate } from "../../../utils/dateUtils";
 import { BeakerIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useQueryClient } from "react-query";
+import { statusStyles } from "../../../utils/statusStyles";
 
 type ServiceDetailsPropsType = {
   selectedService: ServiceType | undefined;
-  setSelectedService: React.Dispatch<React.SetStateAction<ServiceType | undefined>>
+  setSelectedService: React.Dispatch<
+    React.SetStateAction<ServiceType | undefined>
+  >;
 };
 
-const ServiceDetails = ({ selectedService, setSelectedService }: ServiceDetailsPropsType) => {
+const ServiceDetails = ({
+  selectedService,
+  setSelectedService,
+}: ServiceDetailsPropsType) => {
+  const queryClient = useQueryClient();
+  const handleUpdateStatus = async () => {
+    try {
+      const response = await axios.put(
+        `${
+          import.meta.env.VITE_API_URL
+        }/v1/services/${selectedService?._id?.toString()}`,
+        {
+          status: "opened",
+        }
+      );
+
+      if (selectedService) {
+        setSelectedService({ ...selectedService, status: "opened" });
+      }
+
+      queryClient.refetchQueries("patientHistoryQuery");
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <section aria-labelledby="service-information">
       <div className="bg-white shadow sm:rounded-lg">
@@ -26,12 +56,12 @@ const ServiceDetails = ({ selectedService, setSelectedService }: ServiceDetailsP
           </div>
           <div className="ml-4 mt-4 flex-shrink-0">
             <button
-            onClick={() => setSelectedService(undefined)}
+              onClick={() => setSelectedService(undefined)}
               type="button"
               className="relative inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-regular text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 gap-2"
             >
               <span>Close</span>
-              <XMarkIcon className="w-4 h-4"/>
+              <XMarkIcon className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -40,15 +70,17 @@ const ServiceDetails = ({ selectedService, setSelectedService }: ServiceDetailsP
             <div className="sm:col-span-1">
               <dt className="text-sm font-medium text-gray-500">Service Id</dt>
               <dd className="mt-1 text-sm text-gray-900">
-                {selectedService?._id.toString()}
+                {selectedService?._id?.toString()}
               </dd>
             </div>
             <div className="sm:col-span-1">
               <dt className="text-sm font-medium text-gray-500">Status</dt>
               <dd className="mt-1 text-sm text-gray-900">
-                {selectedService?.status
-                  ? sentenceToCaps(selectedService?.status)
-                  : ""}
+                <span className={classNames(statusStyles[selectedService!.status], "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize")}>
+                  {selectedService?.status
+                    ? sentenceToCaps(selectedService?.status)
+                    : ""}
+                </span>
               </dd>
             </div>
             <div className="sm:col-span-1">
@@ -103,7 +135,12 @@ const ServiceDetails = ({ selectedService, setSelectedService }: ServiceDetailsP
         </div>
         <div>
           <button
-            onClick={() => window.open(selectedService?.results, "_blank")}
+            onClick={() => {
+              if (selectedService?.status !== "opened") {
+                handleUpdateStatus();
+              }
+              window.open(selectedService?.results, "_blank");
+            }}
             disabled={selectedService?.status === "pending results"}
             className={classNames(
               selectedService?.status === "pending results"

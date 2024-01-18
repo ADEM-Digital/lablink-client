@@ -11,6 +11,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { useServicesSlideOver } from "./context/ServiceSlideOver";
 import ServicesSlideOverForm from "./components/form/ServiceSlideOver/ServicesSlideOverForm";
+import ServicesStaffHistory from "./pages/servicesStaffHistory/ServicesStaffHistory";
+
+if (typeof window !== "undefined" && typeof window.global === "undefined") {
+  window.global = window;
+}
 
 const queryClient = new QueryClient();
 
@@ -49,6 +54,10 @@ function App() {
                 {userProfile?.role === "staff" && (
                   <>
                     <Route path="/" element={<StaffDashboard />} />
+                    <Route
+                      path="/services"
+                      element={<ServicesStaffHistory />}
+                    />
                   </>
                 )}
               </Route>

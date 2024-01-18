@@ -57,7 +57,7 @@ const RecentServices = ({
             <div className="mt-6 flow-root">
               <ul role="list" className="-my-5 divide-y divide-gray-200">
                 {recentServices.map((service) => (
-                  <li key={service._id.toString()} className="py-4">
+                  <li key={service._id?.toString()} className="py-4">
                     <div className="flex items-center space-x-4">
                       <div className="flex-shrink-0">
                         {/* <img
@@ -71,7 +71,7 @@ const RecentServices = ({
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium text-gray-900">
-                          {service._id.toString()}
+                          {service._id?.toString()}
                         </p>
                         <p className="truncate text-sm text-gray-500">
                           {`Created At: ${stringToDate(service.createdAt)}`}

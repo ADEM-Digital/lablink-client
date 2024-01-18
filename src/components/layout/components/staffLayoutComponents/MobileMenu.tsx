@@ -26,16 +26,15 @@ type MobileMenuPropsType = {
     >;
   }[];
   sidebarOpen: boolean;
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MobileMenu = ({
   navigation,
   secondaryNavigation,
   sidebarOpen,
-  setSidebarOpen
+  setSidebarOpen,
 }: MobileMenuPropsType) => {
-  
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -90,12 +89,16 @@ const MobileMenu = ({
                   </button>
                 </div>
               </Transition.Child>
-              <div className="flex flex-shrink-0 items-center px-4">
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=300"
-                  alt="Easywire logo"
-                />
+              <div className="flex gap-2 flex-shrink-0 items-center px-4">
+                <div className="bg-white p-1 rounded-full">
+                  <img
+                    className="h-10 w-auto"
+                    src="/Lablink-logo.png"
+                    alt="Lablink"
+                  />
+                  
+                </div>
+                <p className="text-white font-bold text-2xl">LabLink</p>
               </div>
               <nav
                 className="mt-5 h-full flex-shrink-0 divide-y divide-cyan-800 overflow-y-auto"
@@ -107,12 +110,16 @@ const MobileMenu = ({
                       key={item.name}
                       href={item.href}
                       className={classNames(
-                        item.current
+                        item.href === window.location.pathname
                           ? "bg-cyan-800 text-white"
                           : "text-cyan-100 hover:bg-cyan-600 hover:text-white",
                         "group flex items-center rounded-md px-2 py-2 text-base font-medium"
                       )}
-                      aria-current={item.current ? "page" : undefined}
+                      aria-current={
+                        item.href === window.location.pathname
+                          ? "page"
+                          : undefined
+                      }
                     >
                       <item.icon
                         className="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200"
