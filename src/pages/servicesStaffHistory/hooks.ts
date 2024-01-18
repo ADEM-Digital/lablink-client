@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axios, { AxiosResponse } from "axios";
 import { useQuery } from "react-query";
-import { ServiceType } from "../../types/Service";
+import { FullServiceType } from "../../types/Service";
 import { useEffect, useState } from "react";
 
 export type ServiceFilterType = {
@@ -16,13 +16,13 @@ export const useServicesStaffHistory = () => {
     createdAt: undefined,
     status: undefined,
   });
-  const [selectedService, setSelectedService] = useState<ServiceType>()
+  const [selectedService, setSelectedService] = useState<FullServiceType>()
 
   const staffServicesQuery = useQuery(
     "staffServices",
     async () => {
       try {
-        const response: AxiosResponse<ServiceType[]> = await axios.get(
+        const response: AxiosResponse<FullServiceType[]> = await axios.get(
           `${import.meta.env.VITE_API_URL}/v1/services/user/${user?.sub}`,
           {
             params: filters,

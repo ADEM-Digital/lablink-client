@@ -1,13 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axios, { AxiosResponse } from "axios";
 import { useQuery } from "react-query";
-import { ServiceType } from "../../types/Service";
+import { FullServiceType } from "../../types/Service";
 
 export type StaffDashboardDataType = {
     completedServices: number;
     unopenedServices: number;
     pendingServices: number;
-    recentServices: ServiceType[];
+    recentServices: FullServiceType[];
   };
 export const useStaffDashboard = () => {
   const { user, isLoading } = useAuth0();

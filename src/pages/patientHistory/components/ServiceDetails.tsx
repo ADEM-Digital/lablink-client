@@ -1,4 +1,4 @@
-import { ServiceType } from "../../../types/Service";
+import { FullServiceType } from "../../../types/Service";
 import { classNames, sentenceToCaps } from "../../../utils/stringUtils";
 import { stringToDate } from "../../../utils/dateUtils";
 import { BeakerIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -7,9 +7,9 @@ import { useQueryClient } from "react-query";
 import { statusStyles } from "../../../utils/statusStyles";
 
 type ServiceDetailsPropsType = {
-  selectedService: ServiceType | undefined;
+  selectedService: FullServiceType | undefined;
   setSelectedService: React.Dispatch<
-    React.SetStateAction<ServiceType | undefined>
+    React.SetStateAction<FullServiceType | undefined>
   >;
 };
 

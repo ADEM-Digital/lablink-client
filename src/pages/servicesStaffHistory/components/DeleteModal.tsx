@@ -1,16 +1,16 @@
 import { Fragment, SetStateAction, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { ServiceType } from "../../../types/Service";
+import { FullServiceType } from "../../../types/Service";
 import axios from "axios";
 import { useQueryClient } from "react-query";
 
 type DeleteModalPropsType = {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
-  selectedService: ServiceType | undefined;
+  selectedService: FullServiceType | undefined;
   setSelectedService: React.Dispatch<
-    React.SetStateAction<ServiceType | undefined>
+    React.SetStateAction<FullServiceType | undefined>
   >;
 };
 

@@ -3,8 +3,6 @@ import { classNames, sentenceToCaps } from "../../../utils/stringUtils";
 import { UseQueryResult } from "react-query";
 import { StaffDashboardDataType } from "../hooks";
 import { stringToDate } from "../../../utils/dateUtils";
-import { ObjectId } from "mongodb";
-
 
 
 const statusStyles = {
@@ -42,7 +40,7 @@ const RecentActivity = ({ staffDashboardQuery }: RecentActivityPropsType) => {
                         className="h-5 w-5 flex-shrink-0 text-gray-400"
                         aria-hidden="true"
                       />
-                      <span className="truncate">{service._id.toString()}</span>
+                      <span className="truncate">{service._id?.toString()}</span>
                     </div>
 
                     <span
@@ -62,11 +60,11 @@ const RecentActivity = ({ staffDashboardQuery }: RecentActivityPropsType) => {
                           <span className="font-medium text-gray-900">
                             {service.tests.map((test) => (
                               <div
-                                // @ts-ignore
+                                
                                 key={test._id?.toString() + service.createdAt}
                                 className=" text-left"
                               >
-                                {/* @ts-ignore */}
+                       
                                 {test?.name}
                               </div>
                             ))}
@@ -166,7 +164,7 @@ const RecentActivity = ({ staffDashboardQuery }: RecentActivityPropsType) => {
                               Service ID: {service._id?.toString()}
                             </p>
                             <p className="truncate text-gray-900 group-hover:text-gray-900">
-                              {/* @ts-ignore */}
+                    
                               Patient name: {service.user?.name}
                             </p>
                             </div>
@@ -178,11 +176,11 @@ const RecentActivity = ({ staffDashboardQuery }: RecentActivityPropsType) => {
                         <div className="font-medium text-gray-900">
                         {service.tests.map((test) => (
                               <div
-                              // @ts-ignore
+                      
                                 key={`${test?._id?.toString() + service.createdAt}-desktop`}
                                 className=" text-right"
                               >
-                                {/* @ts-ignore */}
+                              
                                 {test.name}
                               </div>
                             ))}

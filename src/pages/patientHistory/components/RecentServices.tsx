@@ -2,16 +2,16 @@ import { BeakerIcon } from "@heroicons/react/24/outline";
 import { UseQueryResult } from "react-query";
 
 import { useEffect, useState } from "react";
-import { ServiceType } from "../../../types/Service";
+import { FullServiceType } from "../../../types/Service";
 import RecentTestEmptyState from "../../pateintDashboard/components/RecentTestsEmptyState";
 import { classNames } from "../../../utils/stringUtils";
 import { stringToDate } from "../../../utils/dateUtils";
 import { useNavigate } from "react-router-dom";
 
 type RecentServicesPropsType = {
-  patientServicesQuery: UseQueryResult<ServiceType[] | undefined, unknown>;
+  patientServicesQuery: UseQueryResult<FullServiceType[] | undefined, unknown>;
   setSelectedService: React.Dispatch<
-    React.SetStateAction<ServiceType | undefined>
+    React.SetStateAction<FullServiceType | undefined>
   >;
 };
 
@@ -19,7 +19,7 @@ const RecentServices = ({
   patientServicesQuery,
   setSelectedService,
 }: RecentServicesPropsType) => {
-  const [recentServices, setRecentServices] = useState<ServiceType[]>([]);
+  const [recentServices, setRecentServices] = useState<FullServiceType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,9 +28,9 @@ const RecentServices = ({
         patientServicesQuery.data
           .filter((service) => service.status !== "pending results")
           .sort((a, b) => {
-            const dateA = new Date(a.updatedAt);
-            const dateB = new Date(b.updatedAt);
-            // @ts-ignore
+            const dateA = new Date(a.updatedAt).getTime();
+            const dateB = new Date(b.updatedAt).getTime();
+         
             return dateA - dateB;
           })
           .slice(0, 5)

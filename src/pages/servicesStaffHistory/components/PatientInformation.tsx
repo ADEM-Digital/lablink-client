@@ -1,10 +1,10 @@
 import { UserCircleIcon, PhoneIcon } from "@heroicons/react/20/solid";
 import { classNames } from "../../../utils/stringUtils";
-import { ServiceType } from "../../../types/Service";
+import { FullServiceType } from "../../../types/Service";
 import { useEffect } from "react";
 
 type PatientInformationPropsType = {
-    selectedService: ServiceType | undefined
+    selectedService: FullServiceType | undefined
 }
 const PatientInformation = ({selectedService} : PatientInformationPropsType) => {
     useEffect(() => {

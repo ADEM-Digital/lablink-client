@@ -1,13 +1,13 @@
 import { UseQueryResult } from "react-query";
-import { ServiceType } from "../../../types/Service";
+import { FullServiceType } from "../../../types/Service";
 import { stringToDate } from "../../../utils/dateUtils";
 import { classNames, sentenceToCaps } from "../../../utils/stringUtils";
 import { statusStyles } from "../../../utils/statusStyles";
 
 type ServicesTablePropsType = {
-  patientServicesQuery: UseQueryResult<ServiceType[] | undefined, unknown>;
+  patientServicesQuery: UseQueryResult<FullServiceType[] | undefined, unknown>;
   setSelectedService: React.Dispatch<
-    React.SetStateAction<ServiceType | undefined>
+    React.SetStateAction<FullServiceType | undefined>
   >;
 };
 

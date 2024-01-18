@@ -10,7 +10,7 @@ import {
 
 import axios from "axios";
 import { ArrowUpOnSquareStackIcon } from "@heroicons/react/24/outline";
-import { ServiceType } from "../../../types/Service";
+import { FullServiceType } from "../../../types/Service";
 import { classNames } from "../../../utils/stringUtils";
 import DotLoaderSpinner from "../../../components/spinners/DotLoader";
 import { useQueryClient } from "react-query";
@@ -19,8 +19,8 @@ import { useQueryClient } from "react-query";
 type UploadResultsPropsType = {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
-  selectedService: ServiceType | undefined;
-  setSelectedService: React.Dispatch<React.SetStateAction<ServiceType | undefined>>;
+  selectedService: FullServiceType | undefined;
+  setSelectedService: React.Dispatch<React.SetStateAction<FullServiceType | undefined>>;
 };
 
 const UploadResults = ({

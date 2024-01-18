@@ -1,4 +1,4 @@
-import { ServiceType } from "../../../types/Service";
+import { FullServiceType } from "../../../types/Service";
 import { classNames, sentenceToCaps } from "../../../utils/stringUtils";
 import { stringToDate } from "../../../utils/dateUtils";
 import {
@@ -15,9 +15,9 @@ import UploadResults from "./UploadResults";
 import DeleteModal from "./DeleteModal";
 
 type ServiceDetailsPropsType = {
-  selectedService: ServiceType | undefined;
+  selectedService: FullServiceType | undefined;
   setSelectedService: React.Dispatch<
-    React.SetStateAction<ServiceType | undefined>
+    React.SetStateAction<FullServiceType | undefined>
   >;
 };
 

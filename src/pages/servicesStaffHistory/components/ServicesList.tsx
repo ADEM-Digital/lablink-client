@@ -1,13 +1,13 @@
 import { UseQueryResult } from "react-query";
-import { ServiceType } from "../../../types/Service";
+import { FullServiceType } from "../../../types/Service";
 import { ChevronRightIcon, BeakerIcon } from "@heroicons/react/20/solid";
 import { classNames, sentenceToCaps } from "../../../utils/stringUtils";
 import { stringToDate } from "../../../utils/dateUtils";
 import { statusStyles } from "../../../utils/statusStyles";
 
 type ServicesListPropsType = {
-  staffServicesQuery: UseQueryResult<ServiceType[] | undefined, unknown>;
-  setSelectedService: React.Dispatch<React.SetStateAction<ServiceType | undefined>>
+  staffServicesQuery: UseQueryResult<FullServiceType[] | undefined, unknown>;
+  setSelectedService: React.Dispatch<React.SetStateAction<FullServiceType | undefined>>
 };
 
 const ServicesList = ({ staffServicesQuery, setSelectedService }: ServicesListPropsType) => {
@@ -53,11 +53,11 @@ const ServicesList = ({ staffServicesQuery, setSelectedService }: ServicesListPr
                           <span className="font-medium text-gray-900">
                             {service.tests.map((test) => (
                               <div
-                                // @ts-ignore
+                           
                                 key={test._id?.toString() + service.createdAt}
                                 className=" text-left"
                               >
-                                {/* @ts-ignore */}
+                       
                                 {test?.name}
                               </div>
                             ))}
@@ -161,7 +161,7 @@ const ServicesList = ({ staffServicesQuery, setSelectedService }: ServicesListPr
                            Service ID: {service._id?.toString()}
                          </p>
                          <p className="truncate text-gray-900 group-hover:text-gray-900">
-                           {/* @ts-ignore */}
+                        
                            Patient name: {service.user?.name}
                          </p>
                          </div>
@@ -173,12 +173,12 @@ const ServicesList = ({ staffServicesQuery, setSelectedService }: ServicesListPr
                           <div className="font-medium text-gray-900">
                             {service.tests.map((test) => (
                               <div
-                                // @ts-ignore
+                     
                                 key={`${test?._id?.toString() + service.createdAt
                                 }-desktop`}
                                 className=" text-right"
                               >
-                                {/* @ts-ignore */}
+                            
                                 {test.name}
                               </div>
                             ))}
