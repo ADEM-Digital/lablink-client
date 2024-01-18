@@ -53,7 +53,7 @@ const DesktopSidebar = ({
                   item.href === window.location.pathname
                     ? "bg-cyan-800 text-white"
                     : "text-cyan-100 hover:bg-cyan-600 hover:text-white",
-                  "group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6"
+                  "group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 w-full"
                 )}
                 aria-current={
                   item.href === window.location.pathname ? "page" : undefined
@@ -73,7 +73,7 @@ const DesktopSidebar = ({
                 <button
                   key={item.name}
                   onClick={() => navigate(item.href)}
-                  className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
+                  className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white w-full"
                 >
                   <item.icon
                     className="mr-4 h-6 w-6 text-cyan-200"
